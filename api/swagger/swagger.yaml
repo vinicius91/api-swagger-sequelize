@@ -1,0 +1,270 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Road Calc API
+# during dev, should point to your local machine
+host: 127.0.0.1:3000
+# basePath prefixes all resource paths 
+basePath: /
+# 
+
+tags:
+- name: "Coordenada"
+  description: "Coordenadas das entidades do projeto"
+- name: "Estaca"
+  description: "Coordenadas das entidades do projeto"
+
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+
+  /coordenada:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: coordenada
+    get:
+      tags:
+      - "Coordenada"
+      description: "Retorna a lista de coordenadas"
+      # used as the method name of the controller
+      operationId: "listCoordenada"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Coordenada"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      tags:
+      - "Coordenada"
+      description: "Salva coordenada"
+      # used as the method name of the controller
+      operationId: "saveCoordenada"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Objeto de Coordenada para adicionar no projeto"
+          required: true
+          schema:
+            $ref: "#/definitions/Coordenada"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Coordenada"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
+  /coordenada/{coordenada_id}:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: coordenada
+    get:
+      tags:
+      - "Coordenada"
+      description: "Retorna a lista de coordenadas"
+      # used as the method name of the controller
+      operationId: "findCoordenada"
+      parameters:
+        - name: "coordenada_id"
+          in: path
+          description: "Retorna Coordenadas com esse id"
+          required: true
+          type: integer
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Coordenada"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      tags:
+        - "Coordenada"
+      description: "Salva coordenada com esse id"
+      # used as the method name of the controller
+      operationId: "updateCoordenada"
+      parameters:
+        - name: "coordenada_id"
+          in: path
+          description: "Id da coordenada"
+          required: true
+          type: integer
+        - name: "body"
+          in: "body"
+          description: "Objeto de Coordenada para adicionar no projeto"
+          required: true
+          schema:
+            $ref: "#/definitions/Coordenada"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Coordenada"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
+            
+  /estaca:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: estaca
+    get:
+      tags:
+        - "Estaca"
+      description: "Retorna a lista de estacas"
+      # used as the method name of the controller
+      operationId: "listEstaca"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Estaca"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      tags:
+        - "Estaca"
+      description: "Salva estaca"
+      # used as the method name of the controller
+      operationId: "saveEstaca"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Objeto de Coordenada para adicionar no projeto"
+          required: true
+          schema:
+            $ref: "#/definitions/Estaca"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Estaca"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
+  /estaca/{estaca_id}:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: estaca
+    get:
+      tags:
+        - "Estaca"
+      description: "Retorna estaca"
+      # used as the method name of the controller
+      operationId: "findEstaca"
+      parameters:
+        - name: "estaca_id"
+          in: path
+          description: Retorna estaca com esse id
+          required: true
+          type: integer
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Estaca"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      tags:
+        - "Estaca"
+      description: "Atualiza estaca com esse id"
+      # used as the method name of the controller
+      operationId: "updateEstaca"
+      parameters:
+        - name: "estaca_id"
+          in: path
+          description: Id da estaca
+          required: true
+          type: integer
+        - name: "body"
+          in: "body"
+          description: "Objeto de Coordenada para adicionar no projeto"
+          required: true
+          schema:
+            $ref: "#/definitions/Estaca"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a Estaca
+            $ref: "#/definitions/Coordenada"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+# complex objects have schema definitions
+definitions:
+  Coordenada:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      latitude:
+        type: "number"
+        format: "double"
+      longitude:
+        type: "number"
+        format: "double"
+      geom:
+        type: "string"
+  Estaca:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      numero:
+        type: "integer"
+        format: "int64"
+      intermediario:
+        type: "number"
+        format: "double"
+      relatorio:
+        type: "boolean"
+      coordenada_id:
+        type: "integer"
+        format: "int64"
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
